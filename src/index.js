@@ -16,14 +16,22 @@ program
   .option("-e, --end-date <date>", "end date (YYYY-MM-DD)")
   .option("-l, --limit <number>", "number of results to return", "10")
   .action(async (options) => {
-    const { startDate, endDate, limit } = options;
-    const topProjects = await getProjects(
-      startDate || "2023-01-01",
-      endDate || new Date().toISOString().split("T")[0],
-      limit
+    let { startDate, endDate, limit } = options;
+
+    if (!startDate) startDate = "2023-01-01";
+    if (!endDate) endDate = new Date().toISOString().split("T")[0];
+
+    const topProjects = await getProjects(startDate, endDate, limit);
+
+    console.log(
+      `Top ${limit} starred projects from ${startDate} to ${endDate}:`
     );
 
-    console.log(topProjects);
+    topProjects.forEach((project, index) => {
+      console.log(
+        `${index}. ${project.full_name}- Stars: ${project.stargazers_count} - Link: ${project.html_url} - Created At ${project.created_at}`
+      );
+    });
   });
 
 program.parse();
