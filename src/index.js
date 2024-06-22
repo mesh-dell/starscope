@@ -18,10 +18,28 @@ program
   .action(async (options) => {
     let { startDate, endDate, limit } = options;
 
+    // Validate dates
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+    if (startDate && !dateRegex.test(startDate)) {
+      console.error("Invalid start date format. Use YYYY-MM-DD.");
+      process.exit(1);
+    }
+
+    if (endDate && !dateRegex.test(endDate)) {
+      console.error("Invalid end date format. Use YYYY-MM-DD.");
+      process.exit(1);
+    }
+
     if (!startDate) startDate = "2023-01-01";
     if (!endDate) endDate = new Date().toISOString().split("T")[0];
 
     const topProjects = await getProjects(startDate, endDate, limit);
+
+    if (!topProjects) {
+      console.log(`No projects found between ${startDate} and ${endDate}.`);
+      return;
+    }
 
     console.log(
       `Top ${limit} starred projects from ${startDate} to ${endDate}:`
