@@ -59,4 +59,3 @@ node index.js starscope -s 2023-01-01 -e 2023-06-01 -l 5
 ## License
 
 This project is licensed under the MIT License.
-```
