@@ -11,6 +11,7 @@ Starscope is a CLI (Command Line Interface) application that retrieves and displ
 ## Installation
 
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/mesh-dell/starscope
    cd starscope
@@ -58,4 +59,4 @@ node index.js starscope -s 2023-01-01 -e 2023-06-01 -l 5
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
