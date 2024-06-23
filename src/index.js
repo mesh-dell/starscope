@@ -1,4 +1,6 @@
 const { Command } = require("commander");
+const Table = require("cli-table3");
+
 const { getProjects } = require("../api/getProjects");
 const program = new Command();
 
@@ -45,11 +47,23 @@ program
       `Top ${limit} starred projects from ${startDate} to ${endDate}:`
     );
 
-    topProjects.forEach((project, index) => {
-      console.log(
-        `${index}. ${project.full_name}- Stars: ${project.stargazers_count} - Link: ${project.html_url} - Created At ${project.created_at}`
-      );
+    // Create a new table
+    const table = new Table({
+      head: ["#", "Project Name", "Stars", "Link", "Created At"],
+      colWidths: [4, 35, 10, 50, 25],
     });
+
+    topProjects.forEach((project, index) => {
+      table.push([
+        index + 1,
+        project.full_name,
+        project.stargazers_count,
+        project.html_url,
+        project.created_at,
+      ]);
+    });
+
+    console.log(table.toString());
   });
 
 program.parse();
